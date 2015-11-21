@@ -14,9 +14,11 @@ from app.models.user import User
 
 from front import front_blueprint
 from apis.room_api import room_blueprint
+from apis.user_api import user_blueprint
 
 app.register_blueprint(front_blueprint, url_prefix='/')
 app.register_blueprint(room_blueprint, url_prefix='/api/v1/rooms')
+app.register_blueprint(user_blueprint, url_prefix='/api/v1/users')
 
 
 @login_manager.user_loader
