@@ -47,6 +47,10 @@ class RoomService(object):
         self.db.session.commit()
         return room
 
+    def get_detail(self, room_id):
+        return self.db.session.query(Room)\
+            .filter(Room.id == room_id).first()
+
 
 class UserSchema(Schema):
     username = fields.Str(required=True)
