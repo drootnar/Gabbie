@@ -38,6 +38,8 @@ def handle_this_shit(error):
     if 'api/v1' in request.url:
         if not isinstance(error, HTTPException):
             error = BadRequest()
-        return jsonify({'code': error.code, 'name': error.name, 'description': error.description})
+        response = jsonify({'code': error.code, 'name': error.name, 'description': error.description})
+        response.status_code = error.code
+        return response
     else:
         return render_template('error.html', error=error)
