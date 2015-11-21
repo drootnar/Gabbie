@@ -1,5 +1,5 @@
 from app.service import RoomService, RoomSchema
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, abort
 from app import db
 from werkzeug.exceptions import BadRequest
 
@@ -15,9 +15,12 @@ def room_get():
         'minor': request.args.get('minor', None),
     }
     rooms = service.get(data)
-    return jsonify({
-        'results': RoomSchema(many=True).dump(rooms).data,
-    })
+    if rooms.count() == 1L:
+        return jsonify(rooms[0].json())
+    else:
+        return jsonify({
+            'results': RoomSchema(many=True).dump(rooms).data,
+        })
 
 
 # Add room
@@ -29,3 +32,14 @@ def room_post():
         return jsonify(RoomSchema().dump(room).data)
     else:
         raise BadRequest()
+
+
+# Room detail
+@room_blueprint.route('<room_id>', methods=['GET'])
+def room_get_detail(room_id):
+    service = RoomService(db)
+    room = service.get_detail(room_id)
+    if room:
+        return jsonify(room.json())
+    else:
+        abort(404)
