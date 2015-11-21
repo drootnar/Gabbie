@@ -1,8 +1,15 @@
 from flask import abort
 
 from models.room import Room
+from models.user import User
 
 from marshmallow import Schema, fields
+
+
+def check_room_type(element):
+    if element == u'qa' or element == u'place':
+        return True
+    return False
 
 
 class RoomSchema(Schema):
@@ -12,7 +19,7 @@ class RoomSchema(Schema):
     speaker_name = fields.Str(required=True)
     start_date = fields.DateTime(required=True)
     end_date = fields.DateTime(required=True)
-    type = fields.Str(required=True)
+    type = fields.Str(required=True, validate=check_room_type)
 
 
 class RoomService(object):
@@ -38,3 +45,26 @@ class RoomService(object):
         self.db.session.add(room)
         self.db.session.commit()
         return room
+
+
+class UserSchema(Schema):
+    username = fields.Str(required=True)
+
+
+class UserService(object):
+    def __init__(self, db):
+        self.db = db
+
+    def get(self, data):
+        query = self.db.session.query(User)
+        return query
+
+    def add(self, data):
+        schema = UserSchema()
+        result = schema.load(data)
+        if result.errors:
+            abort(400, result.errors)
+        user = User(result.data)
+        self.db.session.add(user)
+        self.db.session.commit()
+        return user

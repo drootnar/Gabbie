@@ -29,4 +29,3 @@ def room_post():
         return jsonify(RoomSchema().dump(room).data)
     else:
         raise BadRequest()
-
