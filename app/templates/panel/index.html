@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Dashboard v.4</title>
+
+    <link href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/admin/css/animate.css" rel="stylesheet">
+    <link href="/static/admin/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <i class="fa fa-reorder"></i>
+                </button>
+                <a href="#" class="navbar-brand">Inspinia</a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Coders Mill <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="">Coders Mill</a></li>
+                            <li><a href="">Proidea</a></li>
+                            <li><a href="">Eventory</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="/logout">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeIn">
+            <div class="container">
+            <div class="row">
+
+                {% raw %}
+                <div ng-view>
+
+                </div>
+                {% endraw %}
+
+
+
+            </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2015
+            </div>
+        </div>
+
+        </div>
+        </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/static/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="/static/bower_components/slimScroll/jquery.slimscroll.min.js"></script>
+
+    <script src="/static/bower_components/angular/angular.min.js"></script>
+    <script src="/static/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/static/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/static/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="/static/admin/js/inspinia.js"></script>
+    <script src="/static/bower_components/pace/pace.min.js"></script>
+
+
+    <script src="/static/app/app.js"></script>
+    <script src="/static/app/routes.js"></script>
+    <script src="/static/app/controllers/room_index_ctrl.js"></script>
+
+
+</body>
+
+</html>

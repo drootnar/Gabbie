@@ -1,4 +1,4 @@
-from models import Room
+from models.room import Room
 
 from marshmallow import Schema, fields
 
