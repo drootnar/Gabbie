@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Login</title>
+
+    <link href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/static/admin/css/animate.css" rel="stylesheet">
+    <link href="/static/admin/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <!--<form class="m-t" role="form" action="index.html">-->
+                <!--<div class="form-group">-->
+                    <!--<input type="email" class="form-control" placeholder="Username" required="">-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<input type="password" class="form-control" placeholder="Password" required="">-->
+                <!--</div>-->
+                <!--<button type="submit" class="btn btn-primary block full-width m-b">Login</button>-->
+            <form role="form" method="post">
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    <div class="form-group">
+                        {{ form.email(class='form-control', placeholder='E-mail', type='email', autofocus='') }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password(class='form-control', placeholder='Password', type='password', value='') }}
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            {{ form.remember_me }} Remember Me
+                        </label>
+                    </div>
+                    <!-- Change this to a button or input when using this as a form -->
+                    <input type="submit" value="Login"  class="btn btn-primary block full-width m-b"/>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
