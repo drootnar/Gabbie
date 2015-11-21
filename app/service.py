@@ -1,16 +1,18 @@
+from flask import abort
+
 from models.room import Room
 
 from marshmallow import Schema, fields
 
 
 class RoomSchema(Schema):
-    name = fields.Str()
-    major = fields.Integer()
-    minor = fields.Integer()
-    speaker_name = fields.Str()
-    start_date = fields.DateTime()
-    end_date = fields.DateTime()
-    type = fields.Str()
+    name = fields.Str(required=True)
+    major = fields.Integer(required=True)
+    minor = fields.Integer(required=True)
+    speaker_name = fields.Str(required=True)
+    start_date = fields.DateTime(required=True)
+    end_date = fields.DateTime(required=True)
+    type = fields.Str(required=True)
 
 
 class RoomService(object):
@@ -31,7 +33,7 @@ class RoomService(object):
         schema = RoomSchema()
         result = schema.load(data)
         if result.errors:
-            return None
+            abort(400, result.errors)
         room = Room(result.data)
         self.db.session.add(room)
         self.db.session.commit()

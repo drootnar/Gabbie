@@ -15,7 +15,6 @@ def room_get():
         'minor': request.args.get('minor', None),
     }
     rooms = service.get(data)
-    schema = RoomSchema()
     return jsonify({
         'results': RoomSchema(many=True).dump(rooms).data,
     })
@@ -30,5 +29,4 @@ def room_post():
         return jsonify(RoomSchema().dump(room).data)
     else:
         raise BadRequest()
-    # return jsonify(room.__json__())
 
