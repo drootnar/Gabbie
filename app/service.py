@@ -13,6 +13,7 @@ def check_room_type(element):
 
 
 class RoomSchema(Schema):
+    id = fields.Integer(dump_only=True)
     name = fields.Str(required=True)
     major = fields.Integer(required=True)
     minor = fields.Integer(required=True)
