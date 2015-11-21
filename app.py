@@ -1,5 +1,6 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from front import front_blueprint
 import os
 
 
@@ -9,10 +10,7 @@ db = SQLAlchemy(app)
 
 from models import *
 
-
-@app.route('/')
-def hello():
-    return "Hello World!"
+app.register_blueprint(front_blueprint, url_prefix='/')
 
 
 @app.route('/<name>')
