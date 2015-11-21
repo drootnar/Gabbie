@@ -4,6 +4,7 @@ from marshmallow import Schema, fields
 
 
 class RoomSchema(Schema):
+    id = fields.Integer()
     name = fields.Str()
     major = fields.Integer()
     minor = fields.Integer()
