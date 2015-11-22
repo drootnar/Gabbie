@@ -1,5 +1,7 @@
 angular.module('app').controller('RoomIndexController', ['$scope', '$log', 'Room', function($scope, $log, Room) {
 
+    $scope.messages = [];
+
     init = function() {
         Room.query({}, function(data) {$scope.fetch_page(data)});
     };
@@ -12,17 +14,18 @@ angular.module('app').controller('RoomIndexController', ['$scope', '$log', 'Room
 
     $scope.set_current_room = function(id) {
         $scope.current_id = id;
+        Room.messages({'id': $scope.current_id}, function(data) {
+            $scope.messages = data.results;
+        });
     };
 
-    $scope.messages = [
-        {'author': 'Wojciech', 'text': 'dafsd asdfl asd lkasd fjsadlf jalsdfj lsadjf ;aksdf lkasdjf asd lkfjsd fa'},
-        {'author': 'Wojciech', 'text': 'dafsd asdfl asd lkasd fjsadlf jalsdfj lsadjf ;aksdf lkasdjf asd lkfjsd fa'},
-        {'author': 'Wojciech', 'text': 'dafsd asdfl asd lkasd fjsadlf jalsdfj lsadjf ;aksdf lkasdjf asd lkfjsd fa'},
-        {'author': 'Wojciech', 'text': 'dafsd asdfl asd lkasd fjsadlf jalsdfj lsadjf ;aksdf lkasdjf asd lkfjsd fa'},
-        {'author': 'Wojciech', 'text': 'dafsd asdfl asd lkasd fjsadlf jalsdfj lsadjf ;aksdf lkasdjf asd lkfjsd fa'},
-        {'author': 'Wojciech', 'text': 'dafsd asdfl asd lkasd fjsadlf jalsdfj lsadjf ;aksdf lkasdjf asd lkfjsd fa'},
-        {'author': 'Wojciech', 'text': 'dafsd asdfl asd lkasd fjsadlf jalsdfj lsadjf ;aksdf lkasdjf asd lkfjsd fa'}
-    ]
+    $scope.send_message = function(id) {
+        Room.create({'id': id}, $scope.new_message, function(data) {
+            Room.messages({'id': $scope.current_id}, function(data) {
+                $scope.messages = data.results;
+            });
+        });
+    }
 
 }]);
 

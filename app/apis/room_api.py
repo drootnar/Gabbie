@@ -1,6 +1,7 @@
 from app.service import RoomService, RoomSchema
 from flask import Blueprint, request, jsonify, abort
 from app import db
+from flask.ext.login import login_required, current_user
 from werkzeug.exceptions import BadRequest
 
 room_blueprint = Blueprint('room_blueprint', __name__)
@@ -51,6 +52,21 @@ def add_message(room_id):
     service = RoomService(db)
     data = request.json
     data['room_id'] = room_id
+    message = service.add_message(room_id, request.json)
+    if message:
+        return jsonify(message.json(verbose=True))
+    else:
+        abort(400)
+
+
+# Add message
+@room_blueprint.route('/<room_id>/messages_web', methods=['POST'])
+@login_required
+def add_message_web(room_id):
+    service = RoomService(db)
+    data = request.json
+    data['room_id'] = room_id
+    data['user_id'] = current_user.id
     message = service.add_message(room_id, request.json)
     if message:
         return jsonify(message.json(verbose=True))
