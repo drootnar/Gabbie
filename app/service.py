@@ -102,6 +102,29 @@ class RoomService(object):
         messages = messages.order_by(Question.created_at.desc())
         return messages
 
+    def get_message(self, room_id, message_id):
+        return self.db.session.query(Question)\
+            .filter(Question.room_id == room_id)\
+            .filter(Question.id == message_id).first()
+
+    def answer_message(self, room_id, message_id):
+        message = self.db.session.query(Question)\
+            .filter(Question.room_id == room_id)\
+            .filter(Question.id == message_id).first()
+        message.status = 'answered'
+        self.db.session.add(message)
+        self.db.session.commit()
+        return message
+
+    def reject_message(self, room_id, message_id):
+        message = self.db.session.query(Question)\
+            .filter(Question.room_id == room_id)\
+            .filter(Question.id == message_id).first()
+        message.status = 'rejected'
+        self.db.session.add(message)
+        self.db.session.commit()
+        return message
+
 
 class UserSchema(Schema):
     username = fields.Str(required=True)
