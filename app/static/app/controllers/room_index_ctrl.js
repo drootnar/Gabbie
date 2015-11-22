@@ -28,5 +28,9 @@ angular.module('app').controller('RoomIndexController', ['$scope', '$log', 'Room
         });
     }
 
+    setInterval(function() {
+        $scope.set_current_room($scope.current_id);
+    }, 10000);
+
 }]);
 
