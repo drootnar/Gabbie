@@ -96,7 +96,7 @@ def message_detail(room_id, message_id):
 
 
 # Room messages answer
-@room_blueprint.route('/<room_id>/messages/<message_id>/answer', methods=['GET'])
+@room_blueprint.route('/<room_id>/messages/<message_id>/answer', methods=['PUT'])
 def message_detail_answer(room_id, message_id):
     service = RoomService(db)
     message = service.answer_message(room_id, message_id)
@@ -107,7 +107,7 @@ def message_detail_answer(room_id, message_id):
 
 
 # Room messages reject
-@room_blueprint.route('/<room_id>/messages/<message_id>/reject', methods=['GET'])
+@room_blueprint.route('/<room_id>/messages/<message_id>/reject', methods=['PUT'])
 def message_detail_reject(room_id, message_id):
     service = RoomService(db)
     message = service.reject_message(room_id, message_id)
