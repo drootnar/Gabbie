@@ -26,7 +26,7 @@ class Question(db.Model):
         return {
             'id': self.id,
             'text': self.text,
-            'room_id': self.room.__json__(),
-            'user_id': self.user.__json__(),
+            'room_id': self.room.json(),
+            'user_id': self.user.json(),
             'status': self.status,
         }

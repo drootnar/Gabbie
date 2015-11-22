@@ -19,7 +19,7 @@ def room_get():
         return jsonify(rooms[0].json())
     else:
         return jsonify({
-            'results': RoomSchema(many=True).dump(rooms).data,
+            'results': [room.json() for room in rooms],
         })
 
 
@@ -35,7 +35,7 @@ def room_post():
 
 
 # Room detail
-@room_blueprint.route('<room_id>', methods=['GET'])
+@room_blueprint.route('/<room_id>', methods=['GET'])
 def room_get_detail(room_id):
     service = RoomService(db)
     room = service.get_detail(room_id)
@@ -43,3 +43,16 @@ def room_get_detail(room_id):
         return jsonify(room.json())
     else:
         abort(404)
+
+
+# Add message
+@room_blueprint.route('/<room_id>/messages', methods=['POST'])
+def add_message(room_id):
+    service = RoomService(db)
+    data = request.json
+    data['room_id'] = room_id
+    message = service.add_message(room_id, request.json)
+    if message:
+        return jsonify(message.json())
+    else:
+        abort(400)

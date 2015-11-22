@@ -1,7 +1,11 @@
+import os
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import create_engine
 from flask import abort
 
 from models.room import Room
 from models.user import User
+from models.question import Question
 
 from marshmallow import Schema, fields
 
@@ -21,6 +25,32 @@ class RoomSchema(Schema):
     start_date = fields.DateTime(required=True)
     end_date = fields.DateTime(required=True)
     type = fields.Str(required=True, validate=check_room_type)
+
+
+def user_exist(user_id):
+    engine = create_engine(os.environ['DATABASE_URL'], echo=False)
+    db = scoped_session(sessionmaker(
+        autocommit=False, autoflush=False, bind=engine))
+    result = db.query(User).filter(User.id == user_id).first()
+    if result:
+        return True
+    return False
+
+
+def room_exist(room_id):
+    engine = create_engine(os.environ['DATABASE_URL'], echo=False)
+    db = scoped_session(sessionmaker(
+        autocommit=False, autoflush=False, bind=engine))
+    result = db.query(Room).filter(Room.id == room_id).first()
+    if result:
+        return True
+    return False
+
+
+class MessageSchema(Schema):
+    user_id = fields.Integer(required=True, validate=user_exist)
+    room_id = fields.Integer(required=True, validate=room_exist)
+    text = fields.Str(required=True)
 
 
 class RoomService(object):
@@ -50,6 +80,16 @@ class RoomService(object):
     def get_detail(self, room_id):
         return self.db.session.query(Room)\
             .filter(Room.id == room_id).first()
+
+    def add_message(self, room_id, data):
+        schema = MessageSchema()
+        result = schema.load(data)
+        if result.errors:
+            abort(400, result.errors)
+        question = Question(result.data)
+        self.db.session.add(question)
+        self.db.session.commit()
+        return question
 
 
 class UserSchema(Schema):
