@@ -53,6 +53,16 @@ def add_message(room_id):
     data['room_id'] = room_id
     message = service.add_message(room_id, request.json)
     if message:
-        return jsonify(message.json())
+        return jsonify(message.json(verbose=True))
     else:
         abort(400)
+
+
+# Room messages
+@room_blueprint.route('/<room_id>/messages', methods=['GET'])
+def messages_list(room_id):
+    service = RoomService(db)
+    messages = service.list_messages(room_id, request.args)
+    return jsonify({
+        'results': [message.json() for message in messages],
+    })

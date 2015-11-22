@@ -12,6 +12,10 @@ class Question(db.Model):
     status = db.Column(db.String(), nullable=False, default=u'created')
     room = db.relationship("Room", foreign_keys='Question.room_id')
     user = db.relationship("User", foreign_keys='Question.user_id')
+    created_at = db.Column(
+        db.DateTime(), nullable=False, server_default=db.text('now()'))
+    updated_at = db.Column(
+        db.DateTime(), nullable=True, server_onupdate=db.FetchedValue())
 
     def __repr__(self):
         return u'<Question {} {}>'.format(self.room_id, self.user_id)
@@ -22,11 +26,15 @@ class Question(db.Model):
         self.user_id = data.get('user_id')
         self.status = u'created'
 
-    def json(self):
-        return {
+    def json(self, verbose=False):
+        result = {
             'id': self.id,
             'text': self.text,
-            'room_id': self.room.json(),
+            'room_id': self.room_id,
             'user_id': self.user.json(),
             'status': self.status,
         }
+        if verbose:
+            result['room_id'] = self.room.json()
+            result['created_at'] = self.created_at
+        return result

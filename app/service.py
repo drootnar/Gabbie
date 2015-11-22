@@ -91,6 +91,17 @@ class RoomService(object):
         self.db.session.commit()
         return question
 
+    def list_messages(self, room_id, filters):
+        messages = self.db.session.query(Question)\
+            .filter(Question.room_id == room_id)
+        if 'status' in filters:
+            if filters['status'] in ['created', 'answered', 'rejected']:
+                messages = messages.filter(Question.status == filters['status'])
+        if 'user_id' in filters:
+            messages = messages.filter(Question.user_id == filters['user_id'])
+        messages = messages.order_by(Question.created_at.desc())
+        return messages
+
 
 class UserSchema(Schema):
     username = fields.Str(required=True)
