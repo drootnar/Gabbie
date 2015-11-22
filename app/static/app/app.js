@@ -7,7 +7,8 @@ app.factory("Room", function ($resource) {
         {
             'query': {method:'GET', url: '/api/v1/rooms', isArray:false},
             'messages': {method:'GET', url: '/api/v1/rooms/:id/messages', isArray:false},
-            'create': {method:'POST', url: '/api/v1/rooms/:id/messages_web'}
+            'create': {method:'POST', url: '/api/v1/rooms/:id/messages_web'},
+            'create_room': {method:'POST', url: '/api/v1/rooms'}
         }
     );
 });
