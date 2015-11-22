@@ -2,6 +2,8 @@ from sqlalchemy.orm import backref
 
 from app import db
 
+from utils import dump_datetime
+
 
 class Question(db.Model):
     __tablename__ = 'questions'
@@ -40,5 +42,5 @@ class Question(db.Model):
         }
         if verbose:
             result['room_id'] = self.room.json()
-            result['created_at'] = self.created_at
+            result['created_at'] = dump_datetime(self.created_at)
         return result

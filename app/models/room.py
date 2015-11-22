@@ -1,6 +1,8 @@
 from app import db
 from sqlalchemy import Integer
 
+from utils import dump_datetime
+
 
 class Room(db.Model):
     __tablename__ = 'rooms'
@@ -25,7 +27,7 @@ class Room(db.Model):
     def __init__(self, data):
         self.major = data.get('major', 0)
         self.minor = data.get('minor', 0)
-        self.name = data.get('name', 'unknow room')
+        self.name = data.get('name', 'unknown room')
         self.start_date = data.get('start_date')
         self.end_date = data.get('end_date')
         self.type = data.get('type', 'qa')
@@ -39,12 +41,12 @@ class Room(db.Model):
             'name': self.name,
             'speaker_name': self.speaker_name,
             'photo': self.photo,
-            'start_date': self.start_date,
-            'end_date': self.end_date,
+            'start_date': dump_datetime(self.start_date),
+            'end_date': dump_datetime(self.end_date),
             'type': self.type,
             'id': self.id
         }
         if verbose:
-            result['created_at'] = self.created_at
-            result['updated_at'] = self.updated_at
+            result['created_at'] = dump_datetime(self.created_at)
+            result['updated_at'] = dump_datetime(self.updated_at)
         return result
