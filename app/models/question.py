@@ -1,3 +1,5 @@
+from sqlalchemy.orm import backref
+
 from app import db
 
 
@@ -10,8 +12,10 @@ class Question(db.Model):
     room_id = db.Column(db.Integer(), db.ForeignKey(u'rooms.id'), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey(u'users.id'), nullable=False)
     status = db.Column(db.String(), nullable=False, default=u'created')
-    room = db.relationship("Room", foreign_keys='Question.room_id')
-    user = db.relationship("User", foreign_keys='Question.user_id')
+    room = db.relationship("Room", foreign_keys='Question.room_id',
+                           backref=backref("questions", lazy='dynamic'))
+    user = db.relationship("User", foreign_keys='Question.user_id',
+                           backref=backref("questions", lazy='dynamic'))
     created_at = db.Column(
         db.DateTime(), nullable=False, server_default=db.text('now()'))
     updated_at = db.Column(

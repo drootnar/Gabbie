@@ -111,7 +111,7 @@ class UserService(object):
     def __init__(self, db):
         self.db = db
 
-    def get(self, data):
+    def get_all(self):
         query = self.db.session.query(User)
         return query
 
@@ -124,3 +124,7 @@ class UserService(object):
         self.db.session.add(user)
         self.db.session.commit()
         return user
+
+    def get(self, user_id):
+        return self.db.session.query(User)\
+            .filter(User.id == user_id).first()
