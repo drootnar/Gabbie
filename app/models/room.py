@@ -42,7 +42,6 @@ class Room(db.Model):
             'start_date': self.start_date,
             'end_date': self.end_date,
             'type': self.type,
-            'id': self.id
         }
         if verbose:
             result['created_at'] = self.created_at
