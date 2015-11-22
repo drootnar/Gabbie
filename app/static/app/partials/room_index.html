@@ -3,19 +3,18 @@
 
         <div class="tabs-left">
             <ul class="nav nav-tabs">
-                <li ng-repeat="room in rooms" ng-attr-class="{{room.id==current_id && 'active' || '' }}"><a data-toggle="tab" ng-click="set_current_room(room.id)">{{ room.name }} ({{ room.major }}:{{ room.minor }})</a></li>
+                <li ng-repeat="room in rooms" ng-attr-class="{{room.id==current_id && 'active' || '' }}"><a data-toggle="tab" ng-click="set_current_room(room.id)">{{ room.name }} <small>({{ room.major }}:{{ room.minor }})</small></a></li>
             </ul>
             <div class="tab-content ">
                 <div class="tab-pane active">
                     <div class="panel-body">
-
                         <div class="row">
 
-                            <div class="col-md-12 ">
+                            <div class="col-md-10 ">
                                 <div class="chat-discussion">
 
                                     <div class="chat-message left" ng-repeat="message in messages">
-                                        <img class="message-avatar" src="{{ message.user_id.photo }}" alt="" >
+                                        <img class="message-avatar" src="https://robohash.org/{{ message.user_id.id }}" alt="" >
                                         <div class="message">
                                             <a class="message-author"> {{ message.user_id.username }} </a>
 											<span class="message-date"> {{ message.created_at }}</span>
