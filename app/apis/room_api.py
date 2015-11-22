@@ -82,3 +82,36 @@ def messages_list(room_id):
     return jsonify({
         'results': [message.json() for message in messages],
     })
+
+
+# Room messages detail
+@room_blueprint.route('/<room_id>/messages/<message_id>', methods=['GET'])
+def message_detail(room_id, message_id):
+    service = RoomService(db)
+    message = service.get_message(room_id, message_id)
+    if message:
+        return jsonify(message.json(verbose=True))
+    else:
+        abort(400)
+
+
+# Room messages answer
+@room_blueprint.route('/<room_id>/messages/<message_id>/answer', methods=['GET'])
+def message_detail_answer(room_id, message_id):
+    service = RoomService(db)
+    message = service.answer_message(room_id, message_id)
+    if message:
+        return jsonify(message.json(verbose=True))
+    else:
+        abort(400)
+
+
+# Room messages reject
+@room_blueprint.route('/<room_id>/messages/<message_id>/reject', methods=['GET'])
+def message_detail_reject(room_id, message_id):
+    service = RoomService(db)
+    message = service.reject_message(room_id, message_id)
+    if message:
+        return jsonify(message.json(verbose=True))
+    else:
+        abort(400)
