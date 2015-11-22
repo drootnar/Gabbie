@@ -3,7 +3,7 @@
 
         <div class="tabs-left">
             <ul class="nav nav-tabs">
-                <li ng-repeat="room in rooms" ng-attr-class="{{room.id==current_id && 'active' || '' }}"><a data-toggle="tab" ng-click="set_current_room(room.id)">{{ room.name }} ({{ room.major }}:{{ room.minor }})</a></li>
+                <li ng-repeat="room in rooms" ng-attr-class="{{room.id==current_id && 'active' || '' }}"><a data-toggle="tab" ng-click="set_current_room(room.id)">{{ room.name }} <small>({{ room.major }}:{{ room.minor }})</small></a></li>
             </ul>
             <div class="tab-content ">
                 <div class="tab-pane active">
