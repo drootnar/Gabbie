@@ -39,11 +39,14 @@ class User(db.Model):
             self.username = data.get('username')
             self.photo = data.get('photo')
 
-    def json(self):
-        return {
+    def json(self, verbose=False):
+        result = {
             'id': self.id,
             'username': self.username,
             'photo': self.photo,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
         }
+        if verbose:
+            result['questions'] = [q.json() for q in self.questions.all()]
+        return result
