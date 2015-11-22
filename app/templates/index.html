@@ -41,9 +41,14 @@
                         <li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
                         <li><a class="page-scroll" href="#pricing">Pricing</a></li>
                         <li><a class="page-scroll" href="#contact">Contact</a></li>
-                        
+
+
+                        {% if current_user.is_authenticated %}
+                            <li><a class="page-scroll" href="/panel">PANEL</a> </li>
+                        {% else %}
                             <li><a class="page-scroll" href="/register">Register</a></li>
                             <li><a class="page-scroll" href="/login">Log In</a></li>
+                        {% endif %}
                         
                     </ul>
                 </div>

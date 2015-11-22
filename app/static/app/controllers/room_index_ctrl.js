@@ -10,6 +10,7 @@ angular.module('app').controller('RoomIndexController', ['$scope', '$log', 'Room
 
     $scope.fetch_page = function(data) {
         $scope.rooms = data.results;
+        $scope.set_current_room($scope.rooms[0].id);
     };
 
     $scope.set_current_room = function(id) {
