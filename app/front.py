@@ -41,7 +41,8 @@ def register():
         db.session.add(user)
         try:
             db.session.commit()
-            return redirect('panel/')
+            login_user(user)
+            return redirect('/panel')
         except Exception as e:
             raise BadRequest()
 
