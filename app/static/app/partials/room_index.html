@@ -15,7 +15,7 @@
                                 <div class="chat-discussion">
 
                                     <div class="chat-message left" ng-repeat="message in messages">
-                                        <img class="message-avatar" src="{{ message.user_id.photo }}" alt="" >
+                                        <img class="message-avatar" src="https://robohash.org/{{ message.user_id.id }}" alt="" >
                                         <div class="message">
                                             <a class="message-author"> {{ message.user_id.username }} </a>
 											<span class="message-date"> {{ message.created_at }}</span>
