@@ -39,8 +39,8 @@ class Question(db.Model):
             'room_id': self.room_id,
             'user_id': self.user.json(),
             'status': self.status,
+            'created_at': dump_datetime(self.created_at)
         }
         if verbose:
             result['room_id'] = self.room.json()
-            result['created_at'] = dump_datetime(self.created_at)
         return result
