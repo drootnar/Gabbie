@@ -6,6 +6,7 @@ from flask import abort
 from models.room import Room
 from models.user import User
 from models.question import Question
+from models.qa import QA
 
 from marshmallow import Schema, fields
 
@@ -124,6 +125,50 @@ class RoomService(object):
         self.db.session.add(message)
         self.db.session.commit()
         return message
+
+    def add_qa(self, room_id, data):
+        schema = MessageSchema()
+        result = schema.load(data)
+        if result.errors:
+            abort(400, result.errors)
+        qa = QA(result.data)
+        self.db.session.add(qa)
+        self.db.session.commit()
+        return qa
+
+    def list_qas(self, room_id, filters):
+        qas = self.db.session.query(QA)\
+            .filter(QA.room_id == room_id)
+        if 'status' in filters:
+            if filters['status'] in ['created', 'answered', 'rejected']:
+                qas = qas.filter(QA.status == filters['status'])
+        if 'user_id' in filters:
+            qas = qas.filter(QA.user_id == filters['user_id'])
+        qas = qas.order_by(QA.created_at.desc())
+        return qas
+
+    def get_qa(self, room_id, qa_id):
+        return self.db.session.query(QA)\
+            .filter(QA.room_id == room_id)\
+            .filter(QA.id == qa_id).first()
+
+    def answer_qa(self, room_id, qa_id):
+        qa = self.db.session.query(QA)\
+            .filter(QA.room_id == room_id)\
+            .filter(QA.id == qa_id).first()
+        qa.status = 'answered'
+        self.db.session.add(qa)
+        self.db.session.commit()
+        return qa
+
+    def reject_qa(self, room_id, qa_id):
+        qa = self.db.session.query(QA)\
+            .filter(QA.room_id == room_id)\
+            .filter(QA.id == qa_id).first()
+        qa.status = 'rejected'
+        self.db.session.add(qa)
+        self.db.session.commit()
+        return qa
 
 
 class UserSchema(Schema):

@@ -115,3 +115,59 @@ def message_detail_reject(room_id, message_id):
         return jsonify(message.json(verbose=True))
     else:
         abort(400)
+
+
+# Add qa
+@room_blueprint.route('/<room_id>/qas', methods=['POST'])
+def add_qa(room_id):
+    service = RoomService(db)
+    data = request.json
+    data['room_id'] = room_id
+    qa = service.add_qa(room_id, request.json)
+    if qa:
+        return jsonify(qa.json(verbose=True))
+    else:
+        abort(400)
+
+
+# Room qas
+@room_blueprint.route('/<room_id>/qas', methods=['GET'])
+def qas_list(room_id):
+    service = RoomService(db)
+    qas = service.list_qas(room_id, request.args)
+    return jsonify({
+        'results': [qa.json() for qa in qas],
+    })
+
+
+# Room qa detail
+@room_blueprint.route('/<room_id>/qas/<qa_id>', methods=['GET'])
+def qa_detail(room_id, qa_id):
+    service = RoomService(db)
+    qa = service.get_qa(room_id, qa_id)
+    if qa:
+        return jsonify(qa.json(verbose=True))
+    else:
+        abort(400)
+
+
+# Room qa answer
+@room_blueprint.route('/<room_id>/qas/<qa_id>/answer', methods=['PUT'])
+def qa_detail_answer(room_id, qa_id):
+    service = RoomService(db)
+    qa = service.answer_qa(room_id, qa_id)
+    if qa:
+        return jsonify(qa.json(verbose=True))
+    else:
+        abort(400)
+
+
+# Room qa reject
+@room_blueprint.route('/<room_id>/qas/<qa_id>/reject', methods=['PUT'])
+def qa_detail_reject(room_id, qa_id):
+    service = RoomService(db)
+    qa = service.reject_qa(room_id, qa_id)
+    if qa:
+        return jsonify(qa.json(verbose=True))
+    else:
+        abort(400)
