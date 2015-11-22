@@ -1,5 +1,7 @@
 from app import db
 
+from utils import dump_datetime
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -44,8 +46,8 @@ class User(db.Model):
             'id': self.id,
             'username': self.username,
             'photo': self.photo,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
+            'created_at': dump_datetime(self.created_at),
+            'updated_at': dump_datetime(self.updated_at),
         }
         if verbose:
             result['questions'] = [q.json() for q in self.questions.all()]
