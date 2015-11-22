@@ -3,7 +3,7 @@
 
         <div class="tabs-left">
             <ul class="nav nav-tabs">
-                <li ng-repeat="room in rooms" ng-attr-class="{{room.id==current_id && 'active' || '' }}"><a data-toggle="tab" ng-click="set_current_room(room.id)">{{ room.name }}</a></li>
+                <li ng-repeat="room in rooms" ng-attr-class="{{room.id==current_id && 'active' || '' }}"><a data-toggle="tab" ng-click="set_current_room(room.id)">{{ room.name }} ({{ room.major }}:{{ room.minor }})</a></li>
             </ul>
             <div class="tab-content ">
                 <div class="tab-pane active">
@@ -18,7 +18,7 @@
                                         <img class="message-avatar" src="https://www.placecage.com/c/100/100" alt="" >
                                         <div class="message">
                                             <a class="message-author" href="#"> {{ message.author }} </a>
-											<span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span>
+											<span class="message-date"> {{ message.created_at }}</span>
                                             <span class="message-content">
 											    {{ message.text }}
                                             </span>
