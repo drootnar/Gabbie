@@ -15,9 +15,9 @@
                                 <div class="chat-discussion">
 
                                     <div class="chat-message left" ng-repeat="message in messages">
-                                        <img class="message-avatar" src="https://www.placecage.com/c/100/100" alt="" >
+                                        <img class="message-avatar" src="{{ message.user_id.photo }}" alt="" >
                                         <div class="message">
-                                            <a class="message-author" href="#"> {{ message.author }} </a>
+                                            <a class="message-author"> {{ message.user_id.username }} </a>
 											<span class="message-date"> {{ message.created_at }}</span>
                                             <span class="message-content">
 											    {{ message.text }}
