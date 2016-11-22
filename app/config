@@ -1,0 +1,3 @@
+postgresql://drootnar:drootnar@localhost:5432/beacon-comm
+export DATABASE_URL="postgresql://drootnar:drootnar@localhost:5432/beacon-comm"
+export APP_SETTINGS="config.DevelopmentConfig"
